@@ -5,5 +5,12 @@
   "main": "app.js",
   "author": "Giovanni Esposito (mrbabbs) - gioesps@gmail.com",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "start": "babel src -d dist && node dist/app.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
 }
