@@ -7,11 +7,13 @@ const copyFiles = new CopyWebpackPlugin([{
   to: '../index.html'
 }]);
 
+const getPath = name => path.resolve(__dirname, name);
+
 module.exports = {
   entry: './src/app.js',
 
   output: {
-    path: path.resolve(__dirname, 'dist/bundle'),
+    path: getPath('dist/bundle'),
     filename: 'app.bundle.js'
   },
 
@@ -21,10 +23,16 @@ module.exports = {
     ]
   },
 
+  resolve: {
+    alias: {
+      '~': getPath('src/')
+    }
+  },
+
   plugins: [new WriteWebpackFilePlugin(), copyFiles],
 
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: getPath('dist'),
     port: 9090,
   }
 };
