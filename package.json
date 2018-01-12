@@ -8,20 +8,33 @@
   "private": false,
   "scripts": {
     "build": "webpack --config webpack.config.js",
+    "dev": "webpack-dev-server",
     "start": "node dist/app.bundle.js",
-    "dev": "webpack-dev-server"
+    "test": "ava",
+    "test:watch": "ava --watch"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   },
   "devDependencies": {
+    "ava": "^0.24.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "copy-webpack-plugin": "^4.3.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.10.1",
     "write-file-webpack-plugin": "^4.2.0"
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   }

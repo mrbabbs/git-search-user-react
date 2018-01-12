@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import helloWorld from './test.js';
+import SearchInput from './SearchInput';
 
 ReactDOM.render(
-  <h2>{helloWorld('Giovanni')}</h2>,
+  <div>
+    <SearchInput onInput={ev => console.log(ev.key)}/>
+  </div>,
   document.querySelector('#app')
 );
 
