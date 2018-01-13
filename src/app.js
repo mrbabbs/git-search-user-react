@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SearchInput from './SearchInput';
+import SearchPage from '~/pages/Search';
 
 ReactDOM.render(
   <div>
-    <SearchInput onInput={ev => console.log(ev.key)}/>
+    <SearchPage/>
   </div>,
   document.querySelector('#app')
 );

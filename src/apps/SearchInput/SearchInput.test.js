@@ -2,8 +2,8 @@ import test from "ava";
 import React from "react";
 import { shallow } from "enzyme";
 
-import { configTests } from "./test-utils";
-import SearchInput from "./SearchInput";
+import { configTests } from "../../test-utils";
+import SearchInput from "./App";
 
 configTests();
 
