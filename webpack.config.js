@@ -10,7 +10,7 @@ const copyFiles = new CopyWebpackPlugin([{
 const getPath = name => path.resolve(__dirname, name);
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/index.js',
 
   output: {
     path: getPath('dist/bundle'),

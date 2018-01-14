@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import SearchPage from '~/pages/Search';
 
-ReactDOM.render(
+const App = () => (
   <div>
     <SearchPage/>
-  </div>,
-  document.querySelector('#app')
+  </div>
 );
 
+export default App;

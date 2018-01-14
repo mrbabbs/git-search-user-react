@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import SearchInput from '~/apps/SearchInput/App';
 import UsersList from '~/apps/UsersList/App';
@@ -23,9 +25,15 @@ const users = [
 ]
 
 class SearchPage extends React.Component {
+  static propTypes = {
+    search: PropTypes.shape({ term: PropTypes.string }).isRequired,
+    result: PropTypes.array.isRequired,
+  }
+
   constructor(props) {
     super(props);
-    this.state = {result: []};
+
+    this.state = { result: props.result };
   }
 
   handleOnInput(evt) {
@@ -44,5 +52,10 @@ class SearchPage extends React.Component {
   }
 }
 
-export default SearchPage;
+const mapStateToProps = state => ({
+  search: state.search,
+  result: state.users
+});
+
+export default connect(mapStateToProps)(SearchPage);
 
