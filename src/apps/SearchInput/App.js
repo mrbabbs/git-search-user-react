@@ -1,16 +1,22 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-class SearchInput extends React.Component {
-  static propTypes = {
-    onInput: PropTypes.func,
-  };
-
-  render() {
-    return <div>
-      <input type="text" onKeyUp={this.props.onInput}/>
+const SearchInput = ({ onInput, value }) => {
+  return (
+    <div>
+      <input
+        type="text"
+        value={value}
+        onInput={evt => onInput(evt.target.value) }
+      />
     </div>
-  }
+  );
 }
+
+SearchInput.propTypes = {
+  onInput: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 
 export default SearchInput;

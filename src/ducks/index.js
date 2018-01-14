@@ -1,2 +1,2 @@
-export const search = (state = { term: '' }, actions = {}) => state;
+export { default as search } from './search';
 export const users = (state = [], actions = {}) => state;
