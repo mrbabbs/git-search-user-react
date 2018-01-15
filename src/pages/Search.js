@@ -4,58 +4,21 @@ import { connect } from 'react-redux';
 
 import SearchInput from '~/apps/SearchInput/App';
 import UsersList from '~/apps/UsersList/App';
+import { searchTerm } from '~/ducks/search';
 
-const users = [
-  {
-    username: 'mrbabbs',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'phoenix',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'motzard',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'bitede',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'duck007',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  },
-]
+const SearchInputContainer = connect(
+  state => ({ value: state.search.term }),
+  dispatch => ({ onInput: value => dispatch(searchTerm(value)) })
+)(SearchInput);
 
-class SearchPage extends React.Component {
-  static propTypes = {
-    search: PropTypes.shape({ term: PropTypes.string }).isRequired,
-    result: PropTypes.array.isRequired,
-  }
+const UsersListContainer =
+  connect(state => ({ list: state.search.users }))(UsersList);
 
-  constructor(props) {
-    super(props);
+const SearchPage = () => (
+  <div>
+    <SearchInputContainer/>
+    <UsersListContainer/>
+  </div>
+)
 
-    this.state = { result: props.result };
-  }
-
-  handleOnInput(evt) {
-    const typed = evt.target.value;
-
-    this.setState({ result : users.filter(u => u.username.includes(typed)) });
-  }
-
-  render() {
-    return (
-      <div>
-        <SearchInput onInput={(evt) => this.handleOnInput(evt)}/>
-        <UsersList list={this.state.result}/>
-      </div>
-    )
-  }
-}
-
-const mapStateToProps = state => ({
-  search: state.search,
-  result: state.users
-});
-
-export default connect(mapStateToProps)(SearchPage);
-
+export default SearchPage;
