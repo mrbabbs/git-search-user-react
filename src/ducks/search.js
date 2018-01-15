@@ -2,42 +2,50 @@ import { createAction, handleActions } from 'redux-actions'
 
 const initialState = {
   term: '',
-  users: []
+  users: [],
+  loading: false,
+  error: null,
 }
 
 export const SEARCH_TERM = 'SEARCH_TERM';
+export const SEARCH_TERM_SUCCESS = 'SEARCH_TERM_SUCCESS';
+export const SEARCH_TERM_FAIL = 'SEARCH_TERM_FAIL';
 
 export const searchTerm = createAction(SEARCH_TERM, term => term);
-
-const usersList = [
-  {
-    username: 'mrbabbs',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'phoenix',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'motzard',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'bitede',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  }, {
-    username: 'duck007',
-    imgUrl: 'http://lorempixel.com/256/256/animals/',
-  },
-];
+export const searchTermSuccess = createAction(SEARCH_TERM_SUCCESS);
+export const searchTermFail = createAction(SEARCH_TERM_FAIL);
 
 const searchReducer = (state = {}, action = {}) => {
   return {
     ...state,
-    term: action.payload,
-    users: usersList.filter(user => user.username.includes(action.payload))
+    loading: true,
+    error: null,
+    term: action.payload
+    // users: usersList.filter(user => user.username.includes(action.payload))
+  }
+};
+
+const searchSuccessReducer = (state = {}, action = {}) => {
+  return {
+    ...state,
+    loading: false,
+    error: null,
+    users: action.payload
+  }
+};
+
+const searchFailReducer = (state = {}, action = {}) => {
+  return {
+    ...state,
+    loading: false,
+    error: action.payload,
   }
 }
 
 const reducer = handleActions({
   [SEARCH_TERM]: searchReducer,
+  [SEARCH_TERM_SUCCESS]: searchSuccessReducer,
+  [SEARCH_TERM_FAIL]: searchFailReducer
 }, initialState);
 
 export default reducer;
