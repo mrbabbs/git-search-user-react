@@ -1,19 +1,21 @@
 import { createAction, handleActions } from 'redux-actions'
+import { call, fork, put, takeLatest } from 'redux-saga/effects';
+import axios from 'axios';
 
 const initialState = {
   term: '',
   users: [],
   loading: false,
-  error: null,
-}
+  error: null
+};
 
-export const SEARCH_TERM = 'SEARCH_TERM';
-export const SEARCH_TERM_SUCCESS = 'SEARCH_TERM_SUCCESS';
-export const SEARCH_TERM_FAIL = 'SEARCH_TERM_FAIL';
+export const SEARCH_USERS = 'SEARCH_USERS';
+export const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS';
+export const SEARCH_USERS_FAIL = 'SEARCH_USERS_FAIL';
 
-export const searchTerm = createAction(SEARCH_TERM, term => term);
-export const searchTermSuccess = createAction(SEARCH_TERM_SUCCESS);
-export const searchTermFail = createAction(SEARCH_TERM_FAIL);
+export const searchUsers = createAction(SEARCH_USERS);
+export const searchUsersSuccess = createAction(SEARCH_USERS_SUCCESS);
+export const searchUsersFail = createAction(SEARCH_USERS_FAIL);
 
 const searchReducer = (state = {}, action = {}) => {
   return {
@@ -40,12 +42,33 @@ const searchFailReducer = (state = {}, action = {}) => {
     loading: false,
     error: action.payload,
   }
-}
+};
 
 const reducer = handleActions({
-  [SEARCH_TERM]: searchReducer,
-  [SEARCH_TERM_SUCCESS]: searchSuccessReducer,
-  [SEARCH_TERM_FAIL]: searchFailReducer
+  [SEARCH_USERS]: searchReducer,
+  [SEARCH_USERS_SUCCESS]: searchSuccessReducer,
+  [SEARCH_USERS_FAIL]: searchFailReducer
 }, initialState);
+
+export function* searchUsersFn(apiUrl, { payload }) {
+  try {
+    const { data } = yield call(axios.get, apiUrl + payload);
+    const users = data.items.map(
+      user => ({ username: user.login, imgUrl: user.avatar_url })
+    );
+    yield put(searchUsersSuccess(users));
+  } catch (error) {
+    yield put(searchUsersFail(error));
+  }
+};
+
+export function* searchSaga(config) {
+  yield fork(
+    takeLatest,
+    SEARCH_USERS,
+    searchUsersFn,
+    config.apiUrl
+  );
+}
 
 export default reducer;

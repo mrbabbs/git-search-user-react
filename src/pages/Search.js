@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 import SearchInput from '~/apps/SearchInput/App';
 import UsersList from '~/apps/UsersList/App';
-import { searchTerm } from '~/ducks/search';
+import { searchUsers } from '~/ducks/search';
 
 const SearchInputContainer = connect(
   state => ({ value: state.search.term }),
-  dispatch => ({ onInput: value => dispatch(searchTerm(value)) })
+  dispatch => ({ onInput: value => dispatch(searchUsers(value)) })
 )(SearchInput);
 
 const UsersListContainer =

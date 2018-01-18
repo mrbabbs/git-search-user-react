@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import * as reducers from './ducks/';
+import ducks from './ducks/';
 
-const rootReducer = combineReducers(reducers);
+export const rootReducer = combineReducers(ducks.reducers);
+export const rootSaga = ducks.sagas;
 
-export default rootReducer;

@@ -1,1 +1,10 @@
-export { default as search } from './search';
+import search, { searchSaga } from './search';
+
+export function* sagas(config) {
+  yield searchSaga(config);
+}
+
+export default {
+  reducers: { search },
+  sagas,
+}
