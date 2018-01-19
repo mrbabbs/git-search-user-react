@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UserCardItem from  './components/UserCardItem';
+import UserCardItem from './components/UserCardItem';
 
 const renderUsers = users => users.map((user, idx) => (
   <li key={`${user.username}-${idx}`}>
-    <UserCardItem user={user}/>
+    <UserCardItem user={user} />
   </li>
 ));
 
 const UsersList = (props) => {
   const {
     emptyMessage,
-    list
+    list,
   } = props;
 
   return list.length
@@ -26,7 +26,7 @@ const UsersList = (props) => {
 
 UsersList.propTypes = {
   list: PropTypes.array.isRequired,
-  emptyMessage: PropTypes.string
+  emptyMessage: PropTypes.string,
 };
 
 export default UsersList;

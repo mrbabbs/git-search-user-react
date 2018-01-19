@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import SearchInput from '~/apps/SearchInput/App';
@@ -8,7 +7,7 @@ import { searchUsers } from '~/ducks/search';
 
 const SearchInputContainer = connect(
   state => ({ value: state.search.term }),
-  dispatch => ({ onInput: value => dispatch(searchUsers(value)) })
+  dispatch => ({ onInput: value => dispatch(searchUsers(value)) }),
 )(SearchInput);
 
 const UsersListContainer =
@@ -16,9 +15,9 @@ const UsersListContainer =
 
 const SearchPage = () => (
   <div>
-    <SearchInputContainer/>
-    <UsersListContainer/>
+    <SearchInputContainer />
+    <UsersListContainer />
   </div>
-)
+);
 
 export default SearchPage;

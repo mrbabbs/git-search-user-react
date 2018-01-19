@@ -10,38 +10,44 @@ import reducer, {
   searchUsersSuccess,
   searchUsersFail,
   searchUsersFn,
-  searchSaga
+  searchSaga,
 } from './search';
 
 const config = { apiUrl: 'fake.api' };
 
-test('has initial state', t => {
+test('has initial state', (t) => {
   t.deepEqual(
     reducer(undefined, {}),
-    { term: '', users: [], loading: false, error: null }
+    {
+      term: '', users: [], loading: false, error: null,
+    },
   );
 });
 
-test('sets the state on SEARCH_USERS action', t => {
-  const state = { term: '', users: [], loading: false, error: true };
+test('sets the state on SEARCH_USERS action', (t) => {
+  const state = {
+    term: '', users: [], loading: false, error: true,
+  };
   const newState = reducer(
     state,
-    searchUsers('mrbabbs')
+    searchUsers('mrbabbs'),
   );
 
   t.deepEqual(newState, {
     ...state,
     term: 'mrbabbs',
     loading: true,
-    error: null
+    error: null,
   });
 });
 
-test('sets the state on SEARCH_USERS_SUCCESS action', t => {
-  const state = { term: 'biteone', users: [], loading: true, error: null };
+test('sets the state on SEARCH_USERS_SUCCESS action', (t) => {
+  const state = {
+    term: 'biteone', users: [], loading: true, error: null,
+  };
   const newState = reducer(
     state,
-    searchUsersSuccess([{ username: 'biteone', imgUrl: 'fakeUrl' }])
+    searchUsersSuccess([{ username: 'biteone', imgUrl: 'fakeUrl' }]),
   );
 
   t.deepEqual(newState, {
@@ -51,22 +57,24 @@ test('sets the state on SEARCH_USERS_SUCCESS action', t => {
   });
 });
 
-test('sets the state on SEARCH_USERS_FAIL action', t => {
+test('sets the state on SEARCH_USERS_FAIL action', (t) => {
   const error = new Error();
-  const state = { term: 'biteone', users: [], loading: true, error: null };
+  const state = {
+    term: 'biteone', users: [], loading: true, error: null,
+  };
   const newState = reducer(
     state,
-    searchUsersFail(error)
+    searchUsersFail(error),
   );
 
   t.deepEqual(newState, {
     ...state,
     loading: false,
-    error
+    error,
   });
 });
 
-test('has saga', t => {
+test('has saga', (t) => {
   testSaga(searchSaga, config)
     .next()
     .fork(takeLatest, SEARCH_USERS, searchUsersFn, config.apiUrl)
@@ -76,14 +84,14 @@ test('has saga', t => {
   t.pass();
 });
 
-test('searches users on success dispatches SEARCH_USERS_SUCCESS', t => {
+test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   const term = 'mrbabbs';
   const users = [{ login: term, avatar_url: 'fake.url' }];
 
   testSaga(searchUsersFn, config.apiUrl, { payload: term })
     .next()
     .call(axios.get, config.apiUrl + term)
-    .next({ data: { items: users }})
+    .next({ data: { items: users } })
     .put(searchUsersSuccess([{ username: term, imgUrl: 'fake.url' }]))
     .next()
     .isDone();
@@ -91,7 +99,7 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', t => {
   t.pass();
 });
 
-test('searches users on fails dispatches SEARCH_USERS_FAIL', t => {
+test('searches users on fails dispatches SEARCH_USERS_FAIL', (t) => {
   const term = 'mrbabbs';
   const error = new Error();
 

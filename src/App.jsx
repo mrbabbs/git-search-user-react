@@ -4,7 +4,7 @@ import SearchPage from '~/pages/Search';
 
 const App = () => (
   <div>
-    <SearchPage/>
+    <SearchPage />
   </div>
 );
 
