@@ -13,7 +13,7 @@
     "start": "node dist/app.bundle.js",
     "test": "ava",
     "test:watch": "ava --watch",
-    "validate": "npm ls"
+    "validate": "yarn build"
   },
   "ava": {
     "require": [
@@ -21,7 +21,7 @@
     ],
     "babel": "inherit"
   },
-  "pre-commit": ["lint", "test"],
+  "pre-commit": ["lint", "test", "validate"],
   "devDependencies": {
     "ava": "^0.24.0",
     "babel-core": "^6.26.0",
@@ -56,10 +56,5 @@
     "redux-actions": "^2.2.1",
     "redux-saga": "^0.16.0",
     "regenerator-runtime": "^0.11.1"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }
