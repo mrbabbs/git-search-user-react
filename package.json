@@ -12,7 +12,8 @@
     "lint": "eslint ./src",
     "start": "node dist/app.bundle.js",
     "test": "ava",
-    "test:watch": "ava --watch"
+    "test:watch": "ava --watch",
+    "validate": "npm ls"
   },
   "ava": {
     "require": [
@@ -20,6 +21,7 @@
     ],
     "babel": "inherit"
   },
+  "pre-commit": ["lint", "test"],
   "devDependencies": {
     "ava": "^0.24.0",
     "babel-core": "^6.26.0",
@@ -38,6 +40,7 @@
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "^7.5.1",
+    "precommit-hook": "^3.0.0",
     "redux-saga-test-plan": "^3.3.1",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.10.1",
@@ -53,5 +56,10 @@
     "redux-actions": "^2.2.1",
     "redux-saga": "^0.16.0",
     "regenerator-runtime": "^0.11.1"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
