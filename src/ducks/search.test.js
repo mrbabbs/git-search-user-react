@@ -1,7 +1,6 @@
 import test from 'ava';
 import { testSaga } from 'redux-saga-test-plan';
 import { takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
 
 import '../test-utils';
 import reducer, {
@@ -12,8 +11,6 @@ import reducer, {
   searchUsersFn,
   searchSaga,
 } from './search';
-
-const config = { apiUrl: 'fake.api' };
 
 test('has initial state', (t) => {
   t.deepEqual(
@@ -75,9 +72,11 @@ test('sets the state on SEARCH_USERS_FAIL action', (t) => {
 });
 
 test('has saga', (t) => {
-  testSaga(searchSaga, config)
+  const client = () => true;
+
+  testSaga(searchSaga, client)
     .next()
-    .fork(takeLatest, SEARCH_USERS, searchUsersFn, config.apiUrl)
+    .fork(takeLatest, SEARCH_USERS, searchUsersFn, client)
     .next()
     .isDone();
 
@@ -87,10 +86,11 @@ test('has saga', (t) => {
 test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   const term = 'mrbabbs';
   const users = [{ login: term, avatar_url: 'fake.url' }];
+  const client = () => true;
 
-  testSaga(searchUsersFn, config.apiUrl, { payload: term })
+  testSaga(searchUsersFn, client, { payload: term })
     .next()
-    .call(axios.get, config.apiUrl + term)
+    .call(client, term)
     .next({ data: { items: users } })
     .put(searchUsersSuccess([{ username: term, imgUrl: 'fake.url' }]))
     .next()
@@ -102,11 +102,12 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
 test('searches users on fails dispatches SEARCH_USERS_FAIL', (t) => {
   const term = 'mrbabbs';
   const error = new Error();
+  const client = () => { throw error; };
 
-  testSaga(searchUsersFn, config.apiUrl, { payload: term })
+  testSaga(searchUsersFn, client, { payload: term })
     .next()
-    .call(axios.get, config.apiUrl + term)
-    .next(error)
+    .call(client, term)
+    .throw(error)
     .put(searchUsersFail(error))
     .next()
     .isDone();

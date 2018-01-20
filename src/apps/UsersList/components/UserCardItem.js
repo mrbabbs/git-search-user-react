@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserCardItem = props => (
+const UserCardItem = ({ user: { username, imgUrl } }) => (
   <div>
-    <img src={props.user.imgUrl} alt="user-image-profile" />
-    <span>{props.user.username}</span>
+    <img src={imgUrl} alt={username} />
+    <span>{username}</span>
   </div>
 );
 

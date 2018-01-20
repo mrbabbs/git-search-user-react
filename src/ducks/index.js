@@ -1,10 +1,7 @@
+import { combineReducers } from 'redux';
+
 import search, { searchSaga } from './search';
 
-function* sagas(config) {
-  yield searchSaga(config);
-}
+export const rootSagas = searchSaga;
 
-export default {
-  reducers: { search },
-  sagas,
-};
+export default combineReducers({ search });

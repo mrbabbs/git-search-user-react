@@ -20,7 +20,7 @@ const users = [{
 
 test('renders an message if the list is empty', (t) => {
   const emptyMessage = 'No users found';
-  const wrapper = shallow(<UsersList list={[]} emptyMessage="No users found" />);
+  const wrapper = shallow(<UsersList list={[]} emptyMessage={emptyMessage} />);
 
   t.is(wrapper.find('span').text(), 'No users found');
   t.is(wrapper.find('UserItem').length, 0);

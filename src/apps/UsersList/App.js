@@ -3,29 +3,31 @@ import PropTypes from 'prop-types';
 
 import UserCardItem from './components/UserCardItem';
 
-const renderUsers = users => users.map((user, idx) => (
-  <li key={`${user.username}-${idx}`}>
+const renderUsers = users => users.map(user => (
+  <li key={`${user.username}`}>
     <UserCardItem user={user} />
   </li>
 ));
 
-const UsersList = (props) => {
-  const {
-    emptyMessage,
-    list,
-  } = props;
-
-  return list.length
+const UsersList = ({ emptyMessage, list }) => (
+  list.length
     ? (<ul>{renderUsers(list)} </ul>)
     : (
       <div>
         <span>{emptyMessage}</span>
       </div>
-    );
+    )
+);
+
+UsersList.defaultProps = {
+  emptyMessage: '',
 };
 
 UsersList.propTypes = {
-  list: PropTypes.array.isRequired,
+  list: PropTypes.arrayOf(PropTypes.shape({
+    username: PropTypes.string,
+    imgUrl: PropTypes.string,
+  })).isRequired,
   emptyMessage: PropTypes.string,
 };
 

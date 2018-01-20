@@ -1,6 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
 
 const initialState = {
   term: '',
@@ -44,9 +43,9 @@ const reducer = handleActions({
   [SEARCH_USERS_FAIL]: searchFailReducer,
 }, initialState);
 
-export function* searchUsersFn(apiUrl, { payload }) {
+export function* searchUsersFn(client, { payload }) {
   try {
-    const { data } = yield call(axios.get, apiUrl + payload);
+    const { data } = yield call(client, payload);
     const users = data.items.map(user => ({ username: user.login, imgUrl: user.avatar_url }));
     yield put(searchUsersSuccess(users));
   } catch (error) {
@@ -54,12 +53,12 @@ export function* searchUsersFn(apiUrl, { payload }) {
   }
 }
 
-export function* searchSaga(config) {
+export function* searchSaga(client) {
   yield fork(
     takeLatest,
     SEARCH_USERS,
     searchUsersFn,
-    config.apiUrl,
+    client,
   );
 }
 
