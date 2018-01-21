@@ -38,6 +38,24 @@ test('sets the state on SEARCH_USERS action', (t) => {
   });
 });
 
+test('sets empty users on SEARCH_USERS action with empty query', (t) => {
+  const state = {
+    term: '', users: [], loading: false, error: true,
+  };
+  const newState = reducer(
+    state,
+    searchUsers(''),
+  );
+
+  t.deepEqual(newState, {
+    ...state,
+    users: [],
+    term: '',
+    loading: false,
+    error: null,
+  });
+});
+
 test('sets the state on SEARCH_USERS_SUCCESS action', (t) => {
   const state = {
     term: 'biteone', users: [], loading: true, error: null,
@@ -83,6 +101,16 @@ test('has saga', (t) => {
   t.pass();
 });
 
+test('ignores SEARCH_USERS action on empty query', (t) => {
+  const client = () => true;
+
+  testSaga(searchUsersFn, client, { payload: '' })
+    .next()
+    .isDone();
+
+  t.pass();
+});
+
 test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   const term = 'mrbabbs';
   const users = [{ login: term, avatar_url: 'fake.url' }];
@@ -99,7 +127,7 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   t.pass();
 });
 
-test('searches users on fails dispatches SEARCH_USERS_FAIL', (t) => {
+test('searches users on fail dispatches SEARCH_USERS_FAIL', (t) => {
   const term = 'mrbabbs';
   const error = new Error();
   const client = () => { throw error; };

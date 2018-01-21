@@ -16,12 +16,12 @@ export const searchUsers = createAction(SEARCH_USERS);
 export const searchUsersSuccess = createAction(SEARCH_USERS_SUCCESS);
 export const searchUsersFail = createAction(SEARCH_USERS_FAIL);
 
-const searchReducer = (state = {}, action = {}) => ({
+const searchReducer = (state = {}, { payload } = {}) => ({
   ...state,
-  loading: true,
+  loading: !!payload,
   error: null,
-  term: action.payload,
-  // users: usersList.filter(user => user.username.includes(action.payload))
+  term: payload,
+  users: payload ? state.users : [],
 });
 
 const searchSuccessReducer = (state = {}, action = {}) => ({
@@ -44,6 +44,8 @@ const reducer = handleActions({
 }, initialState);
 
 export function* searchUsersFn(client, { payload }) {
+  if (!payload) return;
+
   try {
     const { data } = yield call(client, payload);
     const users = data.items.map(user => ({ username: user.login, imgUrl: user.avatar_url }));
