@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 
 const initialState = {
   term: '',
@@ -47,8 +48,11 @@ export function* searchUsersFn(client, { payload }) {
   if (!payload) return;
 
   try {
+    yield call(delay, 500);
+
     const { data } = yield call(client, payload);
     const users = data.items.map(user => ({ username: user.login, imgUrl: user.avatar_url }));
+
     yield put(searchUsersSuccess(users));
   } catch (error) {
     yield put(searchUsersFail(error));

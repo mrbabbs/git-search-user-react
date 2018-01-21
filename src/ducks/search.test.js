@@ -1,6 +1,7 @@
 import test from 'ava';
 import { testSaga } from 'redux-saga-test-plan';
 import { takeLatest } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 
 import '../test-utils';
 import reducer, {
@@ -118,6 +119,8 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
 
   testSaga(searchUsersFn, client, { payload: term })
     .next()
+    .call(delay, 500)
+    .next()
     .call(client, term)
     .next({ data: { items: users } })
     .put(searchUsersSuccess([{ username: term, imgUrl: 'fake.url' }]))
@@ -133,6 +136,8 @@ test('searches users on fail dispatches SEARCH_USERS_FAIL', (t) => {
   const client = () => { throw error; };
 
   testSaga(searchUsersFn, client, { payload: term })
+    .next()
+    .call(delay, 500)
     .next()
     .call(client, term)
     .throw(error)
