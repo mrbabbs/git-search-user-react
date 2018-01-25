@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Header from '~/apps/Header/App';
 import SearchInput from '~/apps/SearchInput/App';
 import UsersList from '~/apps/UsersList/App';
 import { searchUsers } from '~/ducks/search';
@@ -16,6 +17,8 @@ const UsersListContainer =
 
 const SearchPage = () => (
   <div>
+    <Header appName="GitHub Search Users" />
+
     <div className={classes.main}>
       <SearchInputContainer placehoder="Type github username" />
 
