@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import classes from './App.less';
+
 const SearchInput = ({ onInput, value, placeholder }) => (
-  <div>
+  <div className={classes.searchField}>
     <input
       type="text"
+      className={classes.inputField}
       value={value}
       placeholder={placeholder}
       onInput={evt => onInput(evt.target.value)}

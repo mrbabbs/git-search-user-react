@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import classes from './UserCardItem.less';
+
 const UserCardItem = ({ user: { username, imgUrl } }) => (
-  <div>
-    <img src={imgUrl} alt={username} />
-    <span>{username}</span>
+  <div className={classes.userCard}>
+    <img className={classes.image} src={imgUrl} alt={username} />
+    <span className={classes.username}>{username}</span>
   </div>
 );
 
