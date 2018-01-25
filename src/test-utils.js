@@ -2,6 +2,7 @@
 import 'regenerator-runtime/runtime';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
+import 'ignore-styles';
 /* eslint-enable import/no-extraneous-dependencies */
 
 // eslint-disable-next-line
