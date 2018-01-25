@@ -19,7 +19,27 @@ module.exports = {
 
   module: {
     rules: [
-      { test: /.js$/, use: 'babel-loader', exclude: [/node_modules/, /.test.js$/] }
+      {
+        test: /.js$/,
+        use: 'babel-loader',
+        exclude: [/node_modules/, /.test.js$/]
+      },
+
+      {
+        test: /.less$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              camelCase: 'dashes',
+              localIdentName: '[name]__[local]',
+              modules: true
+            }
+          },
+          'less-loader',
+        ]
+      }
     ]
   },
 
