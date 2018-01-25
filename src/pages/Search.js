@@ -20,7 +20,7 @@ const SearchPage = () => (
     <Header appName="GitHub Search Users" />
 
     <div className={classes.main}>
-      <SearchInputContainer placehoder="Type github username" />
+      <SearchInputContainer placeholder="Type github username" />
 
       <div className={classes.main__results}>
         <UsersListContainer />
