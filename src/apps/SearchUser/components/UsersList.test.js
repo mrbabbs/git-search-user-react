@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { configTests } from '../../../test-utils';
-import UsersList from './UserList';
+import UsersList from './UsersList';
 
 configTests();
 

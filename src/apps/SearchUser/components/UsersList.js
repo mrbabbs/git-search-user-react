@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import UserCardItem from './UserCardItem';
-import classes from './UserList.less';
+import classes from './UsersList.less';
 
 const renderUsers = users => users.map(user => (
   <li key={`${user.id}`}>

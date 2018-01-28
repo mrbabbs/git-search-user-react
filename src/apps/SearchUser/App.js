@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UserList from './components/UserList';
+import UsersList from './components/UsersList';
 import classes from './App.less';
 
 const SearchUser = ({
@@ -20,7 +20,7 @@ const SearchUser = ({
       />
     </div>
 
-    <UserList list={users} emptyMessage={value && emptyMessage} />
+    <UsersList list={users} emptyMessage={value && emptyMessage} />
   </div>
 );
 
