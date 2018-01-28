@@ -128,7 +128,7 @@ test('ignores SEARCH_USERS action on empty query', (t) => {
 
 test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   const term = 'mrbabbs';
-  const users = [{ login: term, avatar_url: 'fake.url' }];
+  const users = [{ id: 1, login: term, avatar_url: 'fake.url' }];
   const client = () => true;
 
   testSaga(searchUsersFn, client, { payload: term })
@@ -137,7 +137,7 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
     .next()
     .call(client, term)
     .next({ data: { items: users } })
-    .put(searchUsersSuccess([{ username: term, imgUrl: 'fake.url' }]))
+    .put(searchUsersSuccess([{ id: 1, username: term, imgUrl: 'fake.url' }]))
     .next()
     .isDone();
 

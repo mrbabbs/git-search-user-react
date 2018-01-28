@@ -54,7 +54,11 @@ export function* searchUsersFn(client, { payload }) {
     yield call(delay, 500);
 
     const { data } = yield call(client, payload);
-    const users = data.items.map(user => ({ username: user.login, imgUrl: user.avatar_url }));
+    const users = data.items.map(user => ({
+      id: user.id,
+      username: user.login,
+      imgUrl: user.avatar_url,
+    }));
 
     yield put(searchUsersSuccess(users));
   } catch (error) {
