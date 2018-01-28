@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import UserCardItem from './UserCardItem';
+import classes from './UserList.less';
 
 const renderUsers = users => users.map(user => (
   <li key={`${user.id}`}>
@@ -13,8 +14,8 @@ const UsersList = ({ emptyMessage, list }) => (
   list.length
     ? (<ul>{renderUsers(list)} </ul>)
     : (
-      <div>
-        <span>{emptyMessage}</span>
+      <div className={classes.emptyMessage}>
+        <span className={classes.emptyMessageText}>{emptyMessage}</span>
       </div>
     )
 );

@@ -5,7 +5,7 @@ import UserList from './components/UserList';
 import classes from './App.less';
 
 const SearchUser = ({
-  onInput, value, placeholder, users, loading,
+  onInput, value, placeholder, users, emptyMessage,
 }) => (
   <div className={classes.searchUsers}>
     <div className={classes.searchUsers__field}>
@@ -20,7 +20,7 @@ const SearchUser = ({
       />
     </div>
 
-    <UserList list={users} loading={loading} />
+    <UserList list={users} emptyMessage={value && emptyMessage} />
   </div>
 );
 
@@ -28,7 +28,7 @@ SearchUser.propTypes = {
   onInput: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  loading: PropTypes.bool,
+  emptyMessage: PropTypes.string,
   users: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
     imgUrl: PropTypes.string,
@@ -38,7 +38,7 @@ SearchUser.propTypes = {
 SearchUser.defaultProps = {
   placeholder: '',
   users: [],
-  loading: false,
+  emptyMessage: '',
 };
 
 export default SearchUser;

@@ -11,6 +11,8 @@ const SearchUsersContainer = connect(
     value: state.search.term,
     users: state.search.users,
     loading: state.search.loading,
+    placeholder: 'Type github username',
+    emptyMessage: 'No results! Try again.',
   }),
   dispatch => ({ onInput: value => dispatch(searchUsers(value)) }),
 )(SearchUsers);
@@ -20,7 +22,7 @@ const SearchPage = () => (
     <Header appName="GitHub Search Users" />
 
     <div className={classes.main}>
-      <SearchUsersContainer placeholder="Type github username" />
+      <SearchUsersContainer />
     </div>
   </div>
 );
