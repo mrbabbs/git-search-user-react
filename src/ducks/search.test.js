@@ -11,6 +11,7 @@ import reducer, {
   searchUsersFail,
   searchUsersFn,
   searchSaga,
+  emptyUsersList,
 } from './search';
 
 test('has initial state', (t) => {
@@ -36,7 +37,20 @@ test('sets the state on SEARCH_USERS action', (t) => {
     term: 'mrbabbs',
     loading: true,
     error: null,
+    users: emptyUsersList,
   });
+});
+
+test('sets empty users list on SEARCH_USERS action', (t) => {
+  const state = {
+    term: '', users: [], loading: false, error: true,
+  };
+  const newState = reducer(
+    state,
+    searchUsers('mrbabbs'),
+  );
+
+  t.is(newState.users.length, 10);
 });
 
 test('sets empty users on SEARCH_USERS action with empty query', (t) => {

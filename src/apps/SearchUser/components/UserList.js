@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UserCardItem from './components/UserCardItem';
+import UserCardItem from './UserCardItem';
 
 const renderUsers = users => users.map(user => (
-  <li key={`${user.username}`}>
+  <li key={`${user.id}`}>
     <UserCardItem user={user} />
   </li>
 ));

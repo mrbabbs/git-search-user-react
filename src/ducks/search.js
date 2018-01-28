@@ -9,6 +9,9 @@ const initialState = {
   error: null,
 };
 
+export const emptyUsersList =
+  Array(...{ length: 10 }).map((el, id) => ({ id }));
+
 export const SEARCH_USERS = 'SEARCH_USERS';
 export const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS';
 export const SEARCH_USERS_FAIL = 'SEARCH_USERS_FAIL';
@@ -22,7 +25,7 @@ const searchReducer = (state = {}, { payload } = {}) => ({
   loading: !!payload,
   error: null,
   term: payload,
-  users: payload ? state.users : [],
+  users: payload ? emptyUsersList : [],
 });
 
 const searchSuccessReducer = (state = {}, action = {}) => ({

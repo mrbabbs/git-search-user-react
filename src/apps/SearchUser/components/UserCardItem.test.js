@@ -15,6 +15,13 @@ const user = {
 test('renders an user object', (t) => {
   const wrapper = shallow(<UserCardItem user={user} />);
 
-  t.is(wrapper.find('span').text(), user.username);
+  t.is(wrapper.find('p').text(), user.username);
   t.is(wrapper.find('img').prop('src'), user.imgUrl);
 });
+
+test('renders an empty user object', (t) => {
+  const wrapper = shallow(<UserCardItem user={({ id: 1 })} />);
+
+  t.is(wrapper.length, 1);
+});
+
