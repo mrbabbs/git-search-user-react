@@ -2,7 +2,11 @@
 
 .user-card {
   display: flex;
-  margin-bottom: 1.3em;
+
+  padding: 0.65em 0;
+
+  animation-name: show-user-card;
+  animation-duration: 0.5s;
 }
 
 .user-card__image {
@@ -51,3 +55,12 @@
   border-radius: 0.3em;
 }
 
+@keyframes show-user-card {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
