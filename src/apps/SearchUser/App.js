@@ -15,6 +15,8 @@ const SearchUser = ({
         value={value}
         placeholder={placeholder}
         onInput={evt => onInput(evt.target.value)}
+        // eslint-disable-next-line
+        autoFocus="true"
       />
     </div>
 
