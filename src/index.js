@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import App from '~/App';
 import rootReducers, { rootSagas } from '~/ducks';
-import { searchUsers } from '~/utils/';
+import { searchUsers, fetchImages } from '~/utils/';
 
 const sagaMiddleware = createSagaMiddleware();
 const devToolsExt =
@@ -23,7 +23,10 @@ const store = createStore(
 
 sagaMiddleware.run(
   rootSagas,
-  searchUsers(axios, 'https://api.github.com/search/users?q='),
+  {
+    fetchUsers: searchUsers(axios, 'https://api.github.com/search/users?q='),
+    fetchImages: fetchImages(axios),
+  },
 );
 
 ReactDOM.render(

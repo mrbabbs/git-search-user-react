@@ -50,20 +50,30 @@ const reducer = handleActions({
 export function* searchUsersFn(client, { payload }) {
   if (!payload) return;
 
-  try {
-    yield call(delay, 500);
+  yield call(delay, 500);
+  let users = [];
 
-    const { data } = yield call(client, payload);
-    const users = data.items.map(user => ({
+  try {
+    const { data } = yield call(client.fetchUsers, payload);
+    users = data.items.map(user => ({
       id: user.id,
       username: user.login,
       imgUrl: user.avatar_url,
     }));
-
-    yield put(searchUsersSuccess(users));
   } catch (error) {
     yield put(searchUsersFail(error));
+
+    return;
   }
+
+  try {
+    yield call(client.fetchImages, users.map(user => user.imgUrl));
+  } catch (err) {
+    // eslint-disable-next-line
+    console.log(err);
+  }
+
+  yield put(searchUsersSuccess(users));
 }
 
 export function* searchSaga(client) {

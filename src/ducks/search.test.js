@@ -14,6 +14,11 @@ import reducer, {
   emptyUsersList,
 } from './search';
 
+const client = {
+  fetchUsers() { return true; },
+  fetchImages() { return true; },
+};
+
 test('has initial state', (t) => {
   t.deepEqual(
     reducer(undefined, {}),
@@ -105,11 +110,10 @@ test('sets the state on SEARCH_USERS_FAIL action', (t) => {
 });
 
 test('has saga', (t) => {
-  const client = () => true;
-
   testSaga(searchSaga, client)
     .next()
     .fork(takeLatest, SEARCH_USERS, searchUsersFn, client)
+
     .next()
     .isDone();
 
@@ -117,8 +121,6 @@ test('has saga', (t) => {
 });
 
 test('ignores SEARCH_USERS action on empty query', (t) => {
-  const client = () => true;
-
   testSaga(searchUsersFn, client, { payload: '' })
     .next()
     .isDone();
@@ -128,16 +130,22 @@ test('ignores SEARCH_USERS action on empty query', (t) => {
 
 test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   const term = 'mrbabbs';
-  const users = [{ id: 1, login: term, avatar_url: 'fake.url' }];
-  const client = () => true;
+  const imgUrl = 'fake.url';
+  const users = [{ id: 1, login: term, avatar_url: imgUrl }];
 
   testSaga(searchUsersFn, client, { payload: term })
     .next()
     .call(delay, 500)
+
     .next()
-    .call(client, term)
+    .call(client.fetchUsers, term)
+
     .next({ data: { items: users } })
-    .put(searchUsersSuccess([{ id: 1, username: term, imgUrl: 'fake.url' }]))
+    .call(client.fetchImages, [imgUrl])
+
+    .next()
+    .put(searchUsersSuccess([{ id: 1, username: term, imgUrl }]))
+
     .next()
     .isDone();
 
@@ -147,15 +155,39 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
 test('searches users on fail dispatches SEARCH_USERS_FAIL', (t) => {
   const term = 'mrbabbs';
   const error = new Error();
-  const client = () => { throw error; };
 
   testSaga(searchUsersFn, client, { payload: term })
     .next()
     .call(delay, 500)
+
     .next()
-    .call(client, term)
+    .call(client.fetchUsers, term)
+
     .throw(error)
     .put(searchUsersFail(error))
+
+    .next()
+    .isDone();
+
+  t.pass();
+});
+
+test('searches users on fail images doesn\'t fail', (t) => {
+  const term = 'mrbabbs';
+
+  testSaga(searchUsersFn, client, { payload: term })
+    .next()
+    .call(delay, 500)
+
+    .next()
+    .call(client.fetchUsers, term)
+
+    .next({ data: { items: [] } })
+    .call(client.fetchImages, [])
+
+    .throw()
+    .put(searchUsersSuccess([]))
+
     .next()
     .isDone();
 
