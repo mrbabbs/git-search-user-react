@@ -1,13 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 
 import SearchPage from '~/pages/Search';
+import LoginPage from '~/pages/Login';
 import './App.less';
 
 const App = () => (
-  <BrowserRouter>
-    <Route path="/" component={SearchPage} />
-  </BrowserRouter>
+  <HashRouter>
+    <div>
+      <Route path="/" exact component={SearchPage} />
+      <Route path="/login" component={LoginPage} />
+    </div>
+  </HashRouter>
 );
 
 export default App;
