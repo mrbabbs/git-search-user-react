@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "username": "mrbabbs",
+    "imgUrl": "cdn.fake.url/mrbabbs.png",
+    "profileUrl": "fake.url.com"
+  }, {
+    "id": 2,
+    "username": "bodge",
+    "imgUrl": "cdn.fake.url/bodge.png",
+    "profileUrl": "fake.url.com"
+  }, {
+    "id": 3,
+    "username": "hercules",
+    "imgUrl": "cdn.fake.url/hercules.png",
+    "profileUrl": "fake.url.com"
+  }
+]

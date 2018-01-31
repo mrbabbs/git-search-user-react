@@ -59,6 +59,7 @@ export function* searchUsersFn(client, { payload }) {
       id: user.id,
       username: user.login,
       imgUrl: user.avatar_url,
+      profileUrl: user.html_url,
     }));
   } catch (error) {
     yield put(searchUsersFail(error));

@@ -41,12 +41,6 @@
   color: @font-color-primary;
 }
 
-.username {
-  font-size: 1.5em;
-
-  color: @font-color-primary;
-}
-
 .username--empty {
   width: 60%;
   height: 1em;
@@ -56,6 +50,24 @@
 
   border-radius: 0.3em;
 }
+
+.username__link {
+  text-decoration: none;
+  color: inherit;
+
+  &:active {
+    color: inherit;
+  }
+
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    color: @color-gray-300;
+  }
+}
+
 
 @keyframes show-user-card {
   from {

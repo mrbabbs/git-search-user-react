@@ -4,22 +4,10 @@ import { shallow } from 'enzyme';
 
 import { configTests } from '../../../test-utils';
 import UsersList from './UsersList';
+import users from '../../../fixtures/users.json';
+import emptyUsers from '../../../fixtures/empty-users.json';
 
 configTests();
-
-const users = [{
-  id: 1,
-  username: 'mrbabbs',
-  imgUrl: 'cdn.fake.url/mrbabbs.png',
-}, {
-  id: 2,
-  username: 'bodge',
-  imgUrl: 'cdn.fake.url/bodge.png',
-}, {
-  id: 3,
-  username: 'hercules',
-  imgUrl: 'cdn.fake.url/hercules.png',
-}];
 
 test('renders an message if the list is empty', (t) => {
   const emptyMessage = 'No users found';
@@ -44,7 +32,6 @@ test('renders userCardItems', (t) => {
 });
 
 test('renders empty UserCardItems', (t) => {
-  const emptyUsers = [{ id: 10 }, { id: 11 }];
   const wrapper = shallow(<UsersList list={emptyUsers} />);
 
   t.is(wrapper.find('li').length, emptyUsers.length);

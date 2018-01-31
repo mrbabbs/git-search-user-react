@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { User } from '../../../models';
 import classes from './UserCardItem.less';
 
 const {
@@ -11,10 +12,11 @@ const {
   userCard__info: userCardInfoClass,
   username: usernameClass,
   usernameEmpty: usernameEmptyClass,
+  username__link: usernameLink,
   image: imageClass,
 } = classes;
 
-const UserCardItem = ({ user: { username, imgUrl } }) => (
+const UserCardItem = ({ user: { username, imgUrl, profileUrl } }) => (
   <div className={userCardClass}>
     <div className={classNames(
       userCardImageClass,
@@ -31,17 +33,16 @@ const UserCardItem = ({ user: { username, imgUrl } }) => (
           classNames(usernameClass, { [usernameEmptyClass]: !username })
         }
       >
-        {username}
+        <a href={profileUrl} target="_blank" className={usernameLink}>
+          {username}
+        </a>
       </p>
     </div>
   </div>
 );
 
 UserCardItem.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    imgUrl: PropTypes.string,
-  }).isRequired,
+  user: PropTypes.shape(User).isRequired,
 };
 
 export default UserCardItem;

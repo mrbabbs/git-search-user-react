@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "login": "mrbabbs",
+    "avatar_url": "cdn.fake.url/mrbabbs.png",
+    "html_url": "fake.url.com"
+  }, {
+    "id": 2,
+    "login": "bodge",
+    "avatar_url": "cdn.fake.url/bodge.png",
+    "html_url": "fake.url.com"
+  }, {
+    "id": 3,
+    "login": "hercules",
+    "avatar_url": "cdn.fake.url/hercules.png",
+    "html_url": "fake.url.com"
+  }
+]

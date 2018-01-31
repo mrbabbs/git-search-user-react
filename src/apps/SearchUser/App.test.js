@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 
 import { configTests } from '../../test-utils';
 import SearchUser from './App';
+import users from '../../fixtures/users.json';
 
 configTests();
 
@@ -29,10 +30,6 @@ test('calls onInput() on typing', (t) => {
 
 test('renders users results', (t) => {
   const value = 'mrbabb';
-  const users = [{
-    username: 'mrbabbs',
-    imgUrl: 'image/fake',
-  }];
   const onInput = Function.prototype;
   const wrapper = shallow(<SearchUser {...{ value, onInput, users }} />);
   const list = wrapper.find('UsersList');

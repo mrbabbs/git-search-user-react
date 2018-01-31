@@ -4,6 +4,8 @@ import { takeLatest } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
 import '../test-utils';
+import users from '../fixtures/users.json';
+import apiUsers from '../fixtures/api-users.json';
 import reducer, {
   SEARCH_USERS,
   searchUsers,
@@ -82,12 +84,12 @@ test('sets the state on SEARCH_USERS_SUCCESS action', (t) => {
   };
   const newState = reducer(
     state,
-    searchUsersSuccess([{ username: 'biteone', imgUrl: 'fakeUrl' }]),
+    searchUsersSuccess(users),
   );
 
   t.deepEqual(newState, {
     ...state,
-    users: [{ username: 'biteone', imgUrl: 'fakeUrl' }],
+    users,
     loading: false,
   });
 });
@@ -130,8 +132,8 @@ test('ignores SEARCH_USERS action on empty query', (t) => {
 
 test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
   const term = 'mrbabbs';
-  const imgUrl = 'fake.url';
-  const users = [{ id: 1, login: term, avatar_url: imgUrl }];
+  // eslint-disable-next-line
+  const imageUrls = apiUsers.map(({ avatar_url }) => avatar_url);
 
   testSaga(searchUsersFn, client, { payload: term })
     .next()
@@ -140,11 +142,11 @@ test('searches users on success dispatches SEARCH_USERS_SUCCESS', (t) => {
     .next()
     .call(client.fetchUsers, term)
 
-    .next({ data: { items: users } })
-    .call(client.fetchImages, [imgUrl])
+    .next({ data: { items: apiUsers } })
+    .call(client.fetchImages, imageUrls)
 
     .next()
-    .put(searchUsersSuccess([{ id: 1, username: term, imgUrl }]))
+    .put(searchUsersSuccess(users))
 
     .next()
     .isDone();

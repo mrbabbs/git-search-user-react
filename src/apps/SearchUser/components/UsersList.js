@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { User } from '../../../models';
 import UserCardItem from './UserCardItem';
 import classes from './UsersList.less';
 
 const renderUsers = users => users.map(user => (
-  <li key={`${user.id}`}>
+  <li key={user.id}>
     <UserCardItem user={user} />
   </li>
 ));
@@ -25,10 +26,7 @@ UsersList.defaultProps = {
 };
 
 UsersList.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.shape({
-    username: PropTypes.string,
-    imgUrl: PropTypes.string,
-  })).isRequired,
+  list: PropTypes.arrayOf(PropTypes.shape(User)).isRequired,
   emptyMessage: PropTypes.string,
 };
 
