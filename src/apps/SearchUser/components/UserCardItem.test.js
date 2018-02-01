@@ -13,8 +13,8 @@ const user = users[0];
 test('renders an user object', (t) => {
   const wrapper = shallow(<UserCardItem user={user} />);
 
-  t.is(wrapper.find('a').text(), user.username);
   t.is(wrapper.find('a').prop('href'), user.profileUrl);
+  t.is(wrapper.find('p').text(), user.username);
   t.is(wrapper.find('img').prop('src'), user.imgUrl);
 });
 

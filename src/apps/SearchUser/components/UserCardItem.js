@@ -12,33 +12,34 @@ const {
   userCard__info: userCardInfoClass,
   username: usernameClass,
   usernameEmpty: usernameEmptyClass,
-  username__link: usernameLink,
+  userCardLink: userCardLinkClass,
+  userCardHover,
   image: imageClass,
 } = classes;
 
 const UserCardItem = ({ user: { username, imgUrl, profileUrl } }) => (
-  <div className={userCardClass}>
-    <div className={classNames(
-      userCardImageClass,
-      { [userCardImageEmptyClass]: !imgUrl },
-    )}
-    >
-      {
-      imgUrl && <img className={imageClass} src={imgUrl} alt={username} />
-    }
-    </div>
-    <div className={userCardInfoClass}>
-      <p
-        className={
-          classNames(usernameClass, { [usernameEmptyClass]: !username })
-        }
+  <a href={profileUrl} target="_blank" className={userCardLinkClass}>
+    <div className={classNames(userCardClass, { [userCardHover]: imgUrl })}>
+      <div className={classNames(
+        userCardImageClass,
+        { [userCardImageEmptyClass]: !imgUrl },
+      )}
       >
-        <a href={profileUrl} target="_blank" className={usernameLink}>
+        {
+        imgUrl && <img className={imageClass} src={imgUrl} alt={username} />
+      }
+      </div>
+      <div className={userCardInfoClass}>
+        <p
+          className={
+            classNames(usernameClass, { [usernameEmptyClass]: !username })
+          }
+        >
           {username}
-        </a>
-      </p>
+        </p>
+      </div>
     </div>
-  </div>
+  </a>
 );
 
 UserCardItem.propTypes = {

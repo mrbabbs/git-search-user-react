@@ -1,12 +1,23 @@
 @import '../../../utils/variables.less';
 
+.user-card--hover {
+  margin-left: 0;
+
+  transition: margin-left 0.3s;
+
+  &:hover {
+    margin-left: 1.2em;
+  }
+}
+
 .user-card {
   display: flex;
 
   padding: 0.65em 0;
 
   animation-name: show-user-card;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
 }
 
 .user-card__image {
@@ -51,7 +62,7 @@
   border-radius: 0.3em;
 }
 
-.username__link {
+.user-card-link {
   text-decoration: none;
   color: inherit;
 
@@ -64,17 +75,20 @@
   }
 
   &:hover {
-    color: @color-gray-300;
+    color: inherit;
   }
 }
-
 
 @keyframes show-user-card {
   from {
     opacity: 0;
+    margin-left: -1.2em;
+    padding-right: 1.2em;
   }
 
   to {
     opacity: 1;
+    margin-left: 0;
+    padding-right: 0;
   }
 }
