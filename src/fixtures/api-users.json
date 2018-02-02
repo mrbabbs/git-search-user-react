@@ -3,16 +3,19 @@
     "id": 1,
     "login": "mrbabbs",
     "avatar_url": "cdn.fake.url/mrbabbs.png",
-    "html_url": "fake.url.com"
+    "html_url": "fake.url.com",
+    "score": 113.123
   }, {
     "id": 2,
     "login": "bodge",
     "avatar_url": "cdn.fake.url/bodge.png",
-    "html_url": "fake.url.com"
+    "html_url": "fake.url.com",
+    "score": 34.654
   }, {
     "id": 3,
     "login": "hercules",
     "avatar_url": "cdn.fake.url/hercules.png",
-    "html_url": "fake.url.com"
+    "html_url": "fake.url.com",
+    "score": 11.345
   }
 ]

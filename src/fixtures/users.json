@@ -3,16 +3,19 @@
     "id": 1,
     "username": "mrbabbs",
     "imgUrl": "cdn.fake.url/mrbabbs.png",
-    "profileUrl": "fake.url.com"
+    "profileUrl": "fake.url.com",
+    "score": 113
   }, {
     "id": 2,
     "username": "bodge",
     "imgUrl": "cdn.fake.url/bodge.png",
-    "profileUrl": "fake.url.com"
+    "profileUrl": "fake.url.com",
+    "score": 35
   }, {
     "id": 3,
     "username": "hercules",
     "imgUrl": "cdn.fake.url/hercules.png",
-    "profileUrl": "fake.url.com"
+    "profileUrl": "fake.url.com",
+    "score": 11
   }
 ]

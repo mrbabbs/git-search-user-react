@@ -15,9 +15,16 @@ const {
   userCardLink: userCardLinkClass,
   userCardHover,
   image: imageClass,
+  score: scoreClass,
+  scoreEmpty: scoreEmptyClass,
+  scoreText: scoreTextClass,
 } = classes;
 
-const UserCardItem = ({ user: { username, imgUrl, profileUrl } }) => (
+const UserCardItem = ({
+  user: {
+    username, imgUrl, profileUrl, score,
+  },
+}) => (
   <a href={profileUrl} target="_blank" className={userCardLinkClass}>
     <div className={classNames(userCardClass, { [userCardHover]: imgUrl })}>
       <div className={classNames(
@@ -36,6 +43,14 @@ const UserCardItem = ({ user: { username, imgUrl, profileUrl } }) => (
           }
         >
           {username}
+        </p>
+        <p
+          className={
+            classNames(scoreClass, { [scoreEmptyClass]: !username })
+          }
+        >
+          <i className="ion-ribbon-b" />
+          <span className={scoreTextClass}>{score}</span>
         </p>
       </div>
     </div>

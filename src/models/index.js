@@ -6,4 +6,5 @@ export const User = {
   username: PropTypes.string,
   imgUrl: PropTypes.string,
   profileUrl: PropTypes.string,
+  score: PropTypes.number,
 };

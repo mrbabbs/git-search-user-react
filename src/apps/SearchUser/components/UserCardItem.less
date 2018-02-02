@@ -38,6 +38,9 @@
 .user-card__info {
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+
   padding-left: 2em;
 }
 
@@ -48,6 +51,8 @@
 
 .username {
   font-size: 1.5em;
+
+  margin-bottom: 0.3em;
 
   color: @font-color-primary;
 }
@@ -77,6 +82,25 @@
   &:hover {
     color: inherit;
   }
+}
+
+.score {
+  font-size: 1em;
+  color: @color-gray-300;
+}
+
+.score--text {
+  padding-left: 0.2em;
+}
+
+.score-empty {
+  width: 40%;
+  height: 1em;
+
+  background-color: @color-gray-200;
+  color: @color-gray-200;
+
+  border-radius: 0.3em;
 }
 
 @keyframes show-user-card {

@@ -60,6 +60,7 @@ export function* searchUsersFn(client, { payload }) {
       username: user.login,
       imgUrl: user.avatar_url,
       profileUrl: user.html_url,
+      score: Math.round(user.score),
     }));
   } catch (error) {
     yield put(searchUsersFail(error));
