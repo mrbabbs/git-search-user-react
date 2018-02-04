@@ -1,0 +1,81 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.6
+
+version: 2
+jobs:
+  build:
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: yarn build
+
+      - persist_to_workspace:
+        root:
+
+  validate_code:
+    steps:
+      - run: yarn test
+      - run: yarn lint
+
+  deploy:
+    steps:
+      - run:
+          command: |
+            cd ~/repo
+            echo "Cloning mrbabbs.com repo ------>"
+            git clone git@github.com:mrbabbs/mrbabbs.com.git
+            echo "Done cloning mrbabbs.com repo <------"
+
+            cd mrbabbs.com
+            pwd
+            git checkout master
+
+            echo "Installing dependecies ------>"
+            npm install
+            echo "Done installing dependecies <------"
+
+            echo "Copying app dist into mrbabbs.com ------>"
+            cp -rf ~/repo/git-search-user-react/dist ~/repo/mrbabbs.com/github-users-search-react
+            echo "Done copying add dist <------"
+
+            echo "Add commit ------>"
+            git add .
+            git commit -m 'Add new build version of git-user-search-react'
+            echo "Done add commit <------"
+
+            echo "Bump version ------>"
+            npm version minor --force
+            echo "Done bump version <------"
+
+            echo "Merge in gh-pages ------>"
+            git checkout gh-pages
+            git merge master
+            echo "Done merge in gh-pagesDone bump version <------"
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - validate_code
+      - build
+      - deploy
