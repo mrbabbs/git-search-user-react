@@ -1,6 +1,6 @@
 {
   "name": "github-user-search-react",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Git hub user search written in react|redux|redux-saga",
   "main": "app.js",
   "author": "Giovanni Esposito (mrbabbs) - gioesps@gmail.com",
