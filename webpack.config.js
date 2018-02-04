@@ -2,6 +2,10 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WriteWebpackFilePlugin = require('write-file-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+const getPath = name => path.resolve(__dirname, name);
+const isProd = () => process.env.NODE_ENV === 'production';
 
 const copyFiles = new CopyWebpackPlugin([{
   from: 'src/index.html',
@@ -13,11 +17,25 @@ const extractCss = new ExtractTextPlugin({
   fallback: 'style-loader'
 });
 
-const getPath = name => path.resolve(__dirname, name);
-const isProd = () => process.env.NODE_ENV === 'production';
+const uglifyJs = new UglifyJsPlugin({
+  test: /\.js($|\?)/i,
+  parallel: true,
+  sourceMap: isProd(),
+  uglifyOptions: {
+    compress: isProd(),
+    output: {
+      beautify: !isProd()
+    }
+  }
+});
 
 module.exports = {
   entry: './src/index.js',
+
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  },
 
   output: {
     path: getPath('dist/bundle'),
@@ -56,7 +74,7 @@ module.exports = {
     }
   },
 
-  plugins: [new WriteWebpackFilePlugin(), copyFiles, extractCss],
+  plugins: [new WriteWebpackFilePlugin(), copyFiles, extractCss, uglifyJs],
 
   devServer: {
     contentBase: getPath('dist'),
