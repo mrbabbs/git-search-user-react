@@ -10,6 +10,8 @@ defaults: &defaults
 version: 2
 jobs:
   build:
+    <<: *defaults
+
     steps:
       - checkout
 
@@ -29,17 +31,40 @@ jobs:
       - run: yarn build
 
       - persist_to_workspace:
-        root:
+          root: ~/repo
+          paths:
+            - git-search-user-react
 
   validate_code:
+    <<: *defaults
+
     steps:
-      - run: yarn test
-      - run: yarn lint
+      - attach_workspace:
+          at: ~/repo/git-search-user-react
+
+      - run:
+          name: Test
+          command: |
+            cd ~/repo/git-search-user-react
+            yarn test
+      - run:
+          name: Lint
+          command: |
+            cd ~/repo/git-search-user-react
+            yarn lint
 
   deploy:
+    <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/repo/git-search-user-react
+
       - run:
           command: |
+            echo "Fix ssh github host issue ------>"
+            mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+            echo "Done fix ssh github host issue <------"
+
             cd ~/repo
             echo "Cloning mrbabbs.com repo ------>"
             git clone git@github.com:mrbabbs/mrbabbs.com.git
@@ -74,7 +99,8 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+
+  build_test_deploy:
     jobs:
       - validate_code
       - build
