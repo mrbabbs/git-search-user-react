@@ -9,7 +9,8 @@ defaults: &defaults
 
 version: 2
 jobs:
-  build:
+
+  validate_code:
     <<: *defaults
 
     steps:
@@ -28,41 +29,37 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn build
+      - run: yarn test
+      - run: yarn lint
 
       - persist_to_workspace:
-          root: ~/repo
+          root: ~/
           paths:
-            - git-search-user-react
+            - repo/*
 
-  validate_code:
+  build:
     <<: *defaults
 
     steps:
       - attach_workspace:
-          at: ~/repo/git-search-user-react
+          at: ~/
 
       - run:
-          name: Test
+          name: Buil
           command: |
-            cd ~/repo/git-search-user-react
-            yarn test
-      - run:
-          name: Lint
-          command: |
-            cd ~/repo/git-search-user-react
-            yarn lint
+            cd ~/repo
+            yarn build
 
       - persist_to_workspace:
-          root: ~/repo
+          root: ~/
           paths:
-            - git-search-user-react
+            - repo/*
 
   deploy:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo/git-search-user-react
+          at: ~/
 
       - run:
           command: |
@@ -70,7 +67,7 @@ jobs:
             mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
             echo "Done fix ssh github host issue <------"
 
-            cd ~/repo
+            cd ~/
             echo "Cloning mrbabbs.com repo ------>"
             git clone git@github.com:mrbabbs/mrbabbs.com.git
             echo "Done cloning mrbabbs.com repo <------"
@@ -84,7 +81,7 @@ jobs:
             echo "Done installing dependecies <------"
 
             echo "Copying app dist into mrbabbs.com ------>"
-            cp -rf ~/repo/git-search-user-react/dist ~/repo/mrbabbs.com/github-users-search-react
+            cp -rf ~/repo/dist ~/mrbabbs.com/github-users-search-react
             echo "Done copying add dist <------"
 
             echo "Add commit ------>"
@@ -108,5 +105,9 @@ workflows:
   build_test_deploy:
     jobs:
       - validate_code
-      - build
-      - deploy
+      - build:
+          requires:
+            - validate_code
+      - deploy:
+          requires:
+            - build
