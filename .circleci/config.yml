@@ -53,6 +53,11 @@ jobs:
             cd ~/repo/git-search-user-react
             yarn lint
 
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - git-search-user-react
+
   deploy:
     <<: *defaults
     steps:
