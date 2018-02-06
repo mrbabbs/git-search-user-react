@@ -30,10 +30,10 @@ jobs:
       - run: yarn lint
       - run: yarn build
       - run:
-          name: deploy
+          name: clone-mrbabbs.com
           command: |
-            cd ~/
             echo "Cloning mrbabbs.com repo ------>"
+            cd ~/
             git clone git@github.com:mrbabbs/mrbabbs.com.git
             echo "Done cloning mrbabbs.com repo <------"
 
@@ -45,11 +45,21 @@ jobs:
             npm install
             echo "Done installing dependecies <------"
 
+      - run:
+          name: deploy
+          command: |
+            echo "Set github user repo ------>"
+            git config --global -l
+            git config --global user.email circleci@circleci
+            git config --global user.name CircleCIcd ~/
+            echo "Done set github user repo <------"
+
             echo "Copying app dist into mrbabbs.com ------>"
             cp -rf ~/repo/dist ~/mrbabbs.com/github-users-search-react
             echo "Done copying add dist <------"
 
             echo "Add commit ------>"
+            cd ~/mrbabbs.com/
             git add .
             git commit -m 'Add new build version of git-user-search-react'
             echo "Done add commit <------"
@@ -58,7 +68,6 @@ jobs:
             npm version minor --force
             echo "Done bump version <------"
 
-            echo "Merge in gh-pages ------>"
-            git checkout gh-pages
-            git merge master
-            echo "Done merge in gh-pagesDone bump version <------"
+            echo "Push on mrbabbs.com master ------>"
+            git push origin master
+            echo "Done push on mrbabbs.com master <------"
