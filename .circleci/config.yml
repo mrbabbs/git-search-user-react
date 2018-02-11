@@ -73,6 +73,7 @@ jobs:
             echo "Done set github user repo <------"
 
             echo "Copying app dist into mrbabbs.com ------>"
+            rm -rf ~/mrbabbs.com/github-users-search-react
             cp -r ~/repo/dist ~/mrbabbs.com/github-users-search-react
             echo "Done copying add dist <------"
 
