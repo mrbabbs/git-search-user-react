@@ -51,18 +51,13 @@ jobs:
       - run:
           name: clone-mrbabbs.com
           command: |
-            pwd
-            ls
             cd ..
-            pwd
-            ls
 
             echo "Cloning mrbabbs.com repo ------>"
             git clone git@github.com:mrbabbs/mrbabbs.com.git
             echo "Done cloning mrbabbs.com repo <------"
 
             cd mrbabbs.com
-            pwd
             git checkout master
 
             echo "Installing dependecies ------>"
@@ -72,12 +67,9 @@ jobs:
       - run:
           name: deploy
           command: |
-            exit 0
-
             echo "Set github user repo ------>"
-            git config --global -l
             git config --global user.email circleci@circleci
-            git config --global user.name CircleCIcd ~/
+            git config --global user.name CircleCIcd
             echo "Done set github user repo <------"
 
             echo "Copying app dist into mrbabbs.com ------>"
@@ -87,15 +79,15 @@ jobs:
             echo "Add commit ------>"
             cd ~/mrbabbs.com/
             git add .
-            git commit -m 'Add new build version of git-user-search-react'
+            git commit -m 'Add new build version of github-users-search-react'
             echo "Done add commit <------"
 
             echo "Bump version ------>"
-            npm version minor --force
+            npm version minor -f
             echo "Done bump version <------"
 
             echo "Push on mrbabbs.com master ------>"
-            # git push origin master
+            git push origin master
             echo "Done push on mrbabbs.com master <------"
 
 
