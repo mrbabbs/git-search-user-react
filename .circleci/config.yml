@@ -2,13 +2,16 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+defaults: &defaults
+  working_directory: ~/repo
+
+  docker:
+      - image: circleci/node:8.6
 
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:8.6
+    <<: *defaults
 
     steps:
       - checkout
@@ -27,13 +30,34 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: yarn test
+
       - run: yarn lint
+
       - run: yarn build
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - repo/dist
+            - .ssh
+
+  deploy:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: ~/
+
       - run:
           name: clone-mrbabbs.com
           command: |
+            pwd
+            ls
+            cd ..
+            pwd
+            ls
+
             echo "Cloning mrbabbs.com repo ------>"
-            cd ~/
             git clone git@github.com:mrbabbs/mrbabbs.com.git
             echo "Done cloning mrbabbs.com repo <------"
 
@@ -48,6 +72,8 @@ jobs:
       - run:
           name: deploy
           command: |
+            exit 0
+
             echo "Set github user repo ------>"
             git config --global -l
             git config --global user.email circleci@circleci
@@ -55,7 +81,7 @@ jobs:
             echo "Done set github user repo <------"
 
             echo "Copying app dist into mrbabbs.com ------>"
-            cp -rf ~/repo/dist ~/mrbabbs.com/github-users-search-react
+            cp -r ~/repo/dist ~/mrbabbs.com/github-users-search-react
             echo "Done copying add dist <------"
 
             echo "Add commit ------>"
@@ -69,5 +95,22 @@ jobs:
             echo "Done bump version <------"
 
             echo "Push on mrbabbs.com master ------>"
-            git push origin master
+            # git push origin master
             echo "Done push on mrbabbs.com master <------"
+
+
+workflows:
+  version: 2
+
+  btd:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+
+          filters:
+            branches:
+              only: master
+
+
