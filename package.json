@@ -1,13 +1,13 @@
 {
   "name": "github-user-search-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Git hub user search written in react|redux|redux-saga",
   "main": "app.js",
   "author": "Giovanni Esposito (mrbabbs) - gioesps@gmail.com",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "add-version": "HASH_COMMIT=\"$(git rev-parse HEAD)\" && sed -i '' \"s/VERSION/${HASH_COMMIT}/\" dist/index.html",
+    "add-version": "HASH_COMMIT=\"$(git rev-parse HEAD)\" && sed -i'' \"s/VERSION/${HASH_COMMIT}/\" dist/index.html",
     "build": "NODE_ENV='production' webpack -p --config webpack.config.js && yarn add-version",
     "dev": "webpack-dev-server",
     "lint": "eslint ./src",
